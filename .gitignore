@@ -1,0 +1,68 @@
+# ============================================
+# CommunityLab — .gitignore
+# ============================================
+
+# --- Python ---
+__pycache__/
+.pytest_cache/
+.coverage
+.mypy_cache/
+.ruff_cache/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# --- Virtual environments ---
+venv/
+env/
+.venv/
+.env
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Environment variables / Secrets ---
+.env
+.env.local
+.env.production
+*.pem
+*.key
+credentials.json
+config_secrets*
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Large files ---
+*.zip
+*.tar.gz
+*.rar
+
+# --- Documento fuente del hackathon (binario grande, no versionar) ---
+*.pdf
+
+# --- n8n ---
+n8n/.n8n/
+
+# --- OCI ---
+*.oci-config
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Streamlit ---
+.streamlit/secrets.toml

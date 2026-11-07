@@ -1,0 +1,27 @@
+CUESTIONARIO TECH LEAD — CommunityLab,Peso,Observador,Fecha,Candidato_1,Candidato_2,Candidato_3,Candidato_4
+"BLOQUE 1: Visión Sistémica (30%)",,,,,,,,,,
+"P1. Describe cómo diseñarías el flujo completo: mensaje Discord → análisis → post LinkedIn → guardado en nube",10%,,,,,,,
+"P2. El LLM tarda 30 seg en generar un post. ¿Qué hacés?",5%,,,,,,,
+"BLOQUE 2: Capacidad de Ejecución (25%)",,,,,,,,,,
+"P3. Tienes 10 días. DS termina día 5. Backend no tiene OCI hasta día 7. ¿Qué hacés días 5-7?",7.5%,,,,,,,
+"P4. Un miembro entrega código funcional pero desordenado. ¿Qué hacés?",7.5%,,,,,,,
+"P5. ¿Qué es un pipeline de orquestación y por qué lo necesitamos? Ejemplo concreto.",7.5%,,,,,,,
+"BLOQUE 3: Dominio Técnico (25%)",,,,,,,,,,
+"P6. Diferencia entre webhook, cron job y pub/sub. ¿Cuál usás para ingesta de Discord?",7.5%,,,,,,,
+"BLOQUE 4: Liderazgo y Comunicación (20%)",,,,,,,,,,
+"P7. Daily standup: DS dice que prueba 3 modelos. BE necesita OCI hoy. Designer no tiene colores claros. ¿Qué hacés?",10%,,,,,,,
+"P8. Explicale a un non-tech en 30 seg qué hace nuestro sistema.",10%,,,,,,,
+"TOTAL (suma de todos los bloques)",100%,,,,,,,
+,,,,,,,,,
+ESCALA DE SCORING,,,1,2,3,4,5
+"No sabe / No aplica",,,,,,
+"Respuesta genérica / incompleta",,,,,,
+"Satisface lo mínimo / correcto",,,,,,
+"Respuesta sólida con razonamiento",,,,,,
+"Respuesta excepcional + visión estratégica",,,,,,
+,,,,,,,,,
+UMBRAL DE DECISIÓN,,,Rango,Veredicto
+"Ideal",34-40,Tech Lead — delegá sin miedo
+"Con apoyo",28-33,Tech Lead con mentoría del arquitecto
+"Especialista",22-27,Mejor como miembro técnico
+"Descartar",<22,Ni lead ni co-lead

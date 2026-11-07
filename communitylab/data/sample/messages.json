@@ -1,0 +1,36 @@
+{
+  "origen_comunidad": "Discord_Grupo_ONE_G10",
+  "periodo_referencia": "Semana_04",
+  "interacciones": [
+    {
+      "autor": "Mariana Souza",
+      "canal": "#logros-y-empleos",
+      "tipo": "testimonio",
+      "texto": "Comunidad, quede seleccionada para el puesto de Desarrolladora Junior de IA! El proyecto del curso de LangChain y OCI que construi en mi portfolio marco toda la diferencia en la entrevista tecnica. Muy agradecida con la comunidad por todo el apoyo!"
+    },
+    {
+      "autor": "Lucas Albuquerque",
+      "canal": "#dudas-langgraph",
+      "tipo": "pregunta_tecnica",
+      "texto": "Tengo dudas sobre como estructurar los nodos condicionales en LangGraph cuando la respuesta del LLM necesita reintento. Alguien tiene un ejemplo practico de router?"
+    },
+    {
+      "autor": "João Pereira",
+      "canal": "#dudas-oci",
+      "tipo": "pregunta_tecnica",
+      "texto": "No me funciona el bucket en OCI, error tras error. Llevo 3 semanas trabado en el mismo proyecto y ya no se que hacer. Quizas esto no es para mi..."
+    },
+    {
+      "autor": "Ana Rodríguez",
+      "canal": "#feedback-cursos",
+      "tipo": "feedback",
+      "texto": "El curso de prompt engineering fue espectacular! Los ejemplos reales con Gemini me sirvieron muchisimo para mi proyecto. Felicitaciones al equipo!"
+    },
+    {
+      "autor": "Carlos Mendoza",
+      "canal": "#proyectos",
+      "tipo": "logro",
+      "texto": "Termine el proyecto final del curso Streamlit + OCI. Dejo el link de mi Github por si alguien quiere verlo. La comunidad me ayudo muchisimo con los bugs!"
+    }
+  ]
+}
