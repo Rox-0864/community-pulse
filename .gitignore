@@ -66,3 +66,6 @@ logs/
 
 # --- Streamlit ---
 .streamlit/secrets.toml
+
+# --- Gentle AI (artefacto local, no portable) ---
+.atl/

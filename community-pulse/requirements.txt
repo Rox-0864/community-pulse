@@ -21,6 +21,9 @@ plotly>=5.22.0
 # --- OCI ---
 oci>=2.127.0
 
+# --- API ---
+fastapi>=0.110.0
+
 # --- Orchestration (opcional) ---
 # langgraph>=0.2.0
 # langchain>=0.2.0

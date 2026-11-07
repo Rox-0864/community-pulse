@@ -16,6 +16,11 @@ Responsable: Software Engineer
 
 import os
 
+from dotenv import load_dotenv
+
+# Carga el archivo .env del proyecto (si existe) antes de leer las variables.
+load_dotenv()
+
 try:
     import google.generativeai as genai
 except ImportError:
