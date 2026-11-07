@@ -196,6 +196,9 @@ COMMUNITYLAB_LLM_BACKEND=rule_based python -m src.bot.discord_bot
 > La ingesta en vivo requiere la API corriendo en `WEBHOOK_URL`. Para una
 > señal visual, seteá `DISCORD_REACT_ON_INGEST=1` y el bot reaccionará 👀 a
 > cada mensaje ingerido.
+>
+> ⚠️ Para leer el contenido de los mensajes (`on_message`), habilitá el
+> **Message Content Intent** en el portal: *Bot → Privileged Gateway Intents*.
 
 ---
 

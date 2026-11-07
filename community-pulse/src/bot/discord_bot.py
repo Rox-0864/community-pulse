@@ -121,7 +121,11 @@ def create_bot(
     if react_on_ingest is None:
         react_on_ingest = os.getenv("DISCORD_REACT_ON_INGEST", "0") == "1"
 
+    # La ingesta en vivo lee ``message.content`` en ``on_message``, que solo
+    # llega poblado si está habilitado el "Message Content Intent" (privilegiado)
+    # tanto en el código como en el Discord Developer Portal.
     intents = discord.Intents.default()
+    intents.message_content = True
     bot = commands.Bot(command_prefix=command_prefix, intents=intents)
 
     # Estado compartido entre los handlers
