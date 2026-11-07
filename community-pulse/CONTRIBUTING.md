@@ -7,7 +7,7 @@
 ## 📁 Estructura del repositorio
 
 ```
-communitylab/
+community-pulse/
 ├── src/
 │   ├── ingest/              ← Lógica de ingesta de datos (JSON, CSV, webhooks)
 │   ├── analysis/            ← Análisis de sentimiento, categorización, relevancia

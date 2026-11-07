@@ -67,7 +67,7 @@ flowchart TB
 ## 📁 Estructura del proyecto
 
 ```
-communitylab/
+community-pulse/
 ├── src/
 │   ├── ingest/              # Carga y normalización de datos
 │   ├── analysis/            # Sentimiento, temas, relevancia
@@ -112,7 +112,7 @@ communitylab/
 ### Instalación
 
 ```bash
-cd communitylab
+cd community-pulse
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt

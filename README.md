@@ -10,7 +10,7 @@ Convierte la actividad orgánica de una comunidad digital en **activos de market
 
 | Ubicación | Contenido |
 |-----------|-----------|
-| [`communitylab/`](communitylab/) | Código del sistema: pipeline, análisis LLM, motor de decisiones, generadores, API y dashboard. Guía de instalación en [`communitylab/README.md`](communitylab/README.md). |
+| [`community-pulse/`](community-pulse/) | Código del sistema: pipeline, análisis LLM, motor de decisiones, generadores, API y dashboard. Guía de instalación en [`community-pulse/README.md`](community-pulse/README.md). |
 | [`arquitectura.md`](arquitectura.md) | Arquitectura técnica y diagramas. |
 | [`plan_trabajo_semanal.md`](plan_trabajo_semanal.md) | Plan de trabajo del hackathon. |
 | [`guia_modulos.md`](guia_modulos.md) | Guía de implementación por módulos. |
@@ -20,10 +20,10 @@ Convierte la actividad orgánica de una comunidad digital en **activos de market
 
 ## 🚀 Arranque rápido
 
-La guía completa está en [`communitylab/README.md`](communitylab/README.md). Resumen:
+La guía completa está en [`community-pulse/README.md`](community-pulse/README.md). Resumen:
 
 ```bash
-cd communitylab
+cd community-pulse
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
