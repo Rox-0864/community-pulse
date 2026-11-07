@@ -7,6 +7,11 @@ Responsable: Backend Developer
 
 import os
 
+from dotenv import load_dotenv
+
+# Carga el archivo .env del proyecto (si existe) antes de leer las variables.
+load_dotenv()
+
 OCI_CONFIG = {
     "user": os.getenv("OCI_USER_ID"),
     "key_file": os.getenv("OCI_KEY_FILE_PATH", "~/.oci/oci_api_key.pem"),

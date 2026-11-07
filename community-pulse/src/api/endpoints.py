@@ -31,7 +31,11 @@ def _build_processor():
         if pipeline is None:
             from src.orchestration.pipeline import CommunityPulsePipeline
             from src.utils.llm_client import create_llm_client
-            pipeline = CommunityPulsePipeline(llm_client=create_llm_client())
+            from src.oci.client import create_oci_storage
+            pipeline = CommunityPulsePipeline(
+                llm_client=create_llm_client(),
+                oci_storage=create_oci_storage(),
+            )
         return await pipeline.process(payload)
 
     return process

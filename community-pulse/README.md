@@ -60,7 +60,7 @@ flowchart TB
     OCI --> UI
 ```
 
-> **Estado actual**: pipeline implementado end-to-end (ingesta webhook asíncrona → análisis → decisiones → generadores). Integración con OCI Object Storage en curso (pendiente cuenta/credenciales reales).
+> **Estado actual**: pipeline implementado end-to-end (ingesta webhook asíncrona → análisis → decisiones → generadores). Cliente OCI Object Storage implementado (`src/oci/client.py`); solo falta la prueba real con credenciales de la cuenta.
 
 ---
 
@@ -205,7 +205,7 @@ python3 -m pytest tests/ -q   # 38 tests
 - [x] Análisis de sentimiento con LLMs (Gemini/OpenAI + fallback rule-based)
 - [x] Generación de 2+ formatos de activos (LinkedIn, FAQ/tip, newsletter)
 - [ ] Orquestación del flujo ~~(Python/LangGraph)~~ → implementado en Python puro (LangGraph como opción futura)
-- [ ] Integración OCI Object Storage (código listo; falta credenciales reales)
+- [ ] Integración OCI Object Storage (cliente implementado; falta prueba real con credenciales)
 - [x] Demo de 3 ejemplos de transformación (sample → decisiones → activos)
 - [x] Repositorio con documentación y diagrama
 
