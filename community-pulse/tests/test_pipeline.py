@@ -105,3 +105,48 @@ def test_rule_based_metrics_es():
     sent = json.loads(resp.choices[0].message.content)
     assert sent["sentiment"] == "muy_positivo"
     assert sent["score"] > 0.8
+
+
+def test_rule_based_duda_no_es_negativa():
+    """
+    "no entiendo" es una duda, no un sentimiento negativo ni frustración.
+
+    Regresión: "no entiendo" estaba en NEGATIVO y en DUDA a la vez; como
+    NEGATIVO se evaluaba antes, toda duda pura se clasificaba "negativo".
+    """
+    client = RuleBasedClient()
+    resp = client.chat.completions.create(
+        model="x",
+        messages=[
+            {"role": "system", "content": "Eres un experto en análisis de sentimiento de comunidades tecnológicas."},
+            {"role": "user", "content": "Analiza el sentimiento de este mensaje:\n\nNo entiendo cómo configurar OCI"},
+        ],
+    )
+    sent = json.loads(resp.choices[0].message.content)
+    assert sent["sentiment"] == "neutral"
+
+
+@pytest.mark.asyncio
+async def test_duda_pura_no_genera_alerta_miembro():
+    """
+    Un miembro que solo pide ayuda NO debe marcarse como "en riesgo de abandono".
+
+    Regresión: "no entiendo" sumaba frustración (+0.25) y sentimiento bajo
+    (0.3), llevando el riesgo a exactamente 0.60 = umbral de alerta_miembro.
+    """
+    pipeline = CommunityPulsePipeline(llm_client=RuleBasedClient())
+    resultado = await pipeline.process({
+        "origen_comunidad": "discord",
+        "periodo_referencia": "Semana_04",
+        "interacciones": [
+            {"autor": "Lucas", "texto": "No entiendo cómo configurar OCI, me pueden ayudar"},
+        ],
+    })
+
+    decisiones = resultado["resumen_comunidad"]["decisiones"]
+    acciones = decisiones["acciones_recomendadas"]
+
+    assert not any(a["tipo"] == "alerta_miembro" for a in acciones)
+    assert not any(a["tipo"] == "alerta_sentimiento_puntual" for a in acciones)
+    # Sí se detecta como duda técnica → FAQ
+    assert any(a["tipo"] == "generar_faq" for a in acciones)

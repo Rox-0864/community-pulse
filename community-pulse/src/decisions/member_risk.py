@@ -18,7 +18,7 @@ class MemberRiskDetector:
 
     FRUSTRACION_KEYWORDS = [
         "no funciona", "no puedo", "error", "bug", "frustrado", "frustrada",
-        "me rindo", "abandonar", "no entiendo", "no me sirve",
+        "me rindo", "abandonar", "no me sirve",
         "horrible", "terrible", "perdido", "perdida", "trabado", "trabada", "bloqueado", "bloqueada",
     ]
 

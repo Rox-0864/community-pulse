@@ -36,7 +36,7 @@ NEGATIVO_FUERTE = [
 ]
 NEGATIVO = [
     "no funciona", "no me funciona", "no funca", "error", "bug", "no puedo",
-    "no me sirve", "no entiendo", "trabado", "frustrad", "no anda",
+    "no me sirve", "trabado", "frustrad", "no anda",
     "falla", "rompió", "no carga", "no deja", "problema", "issue",
 ]
 CONTRATACION = [
