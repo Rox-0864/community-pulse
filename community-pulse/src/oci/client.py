@@ -13,7 +13,7 @@ Modos de configuración:
 Responsable: Backend Developer
 """
 
-from src.oci.config import OCI_CONFIG, OCI_BUCKET_NAME, has_oci_credentials
+from src.oci import config as oci_config
 from src.oci.storage import OCIStorage
 
 
@@ -30,18 +30,18 @@ class OCIClient:
         config = config if config is not None else _build_oci_config()
         self.object_storage_client = _import_oci().object_storage.ObjectStorageClient(config)
         self.namespace = self.object_storage_client.get_namespace().data
-        self.bucket_name = bucket_name or OCI_BUCKET_NAME
+        self.bucket_name = bucket_name or oci_config.OCI_BUCKET_NAME
 
 
 def _build_oci_config() -> dict:
     """Config OCI: env vars explícitas o archivo ~/.oci/config estándar."""
-    if has_oci_credentials():
+    if oci_config.has_oci_credentials():
         return {
-            "user": OCI_CONFIG["user"],
-            "key_file": OCI_CONFIG["key_file"],
-            "fingerprint": OCI_CONFIG["fingerprint"],
-            "tenancy": OCI_CONFIG["tenancy"],
-            "region": OCI_CONFIG["region"],
+            "user": oci_config.OCI_CONFIG["user"],
+            "key_file": oci_config.OCI_CONFIG["key_file"],
+            "fingerprint": oci_config.OCI_CONFIG["fingerprint"],
+            "tenancy": oci_config.OCI_CONFIG["tenancy"],
+            "region": oci_config.OCI_CONFIG["region"],
         }
     return _import_oci().config.from_file()
 
@@ -63,6 +63,6 @@ def create_oci_storage():
     Si las credenciales están configuradas pero son inválidas, deja que
     el error se propague para no ocultar una mala configuración.
     """
-    if not has_oci_credentials():
+    if not oci_config.has_oci_credentials():
         return None
     return OCIStorage(OCIClient())

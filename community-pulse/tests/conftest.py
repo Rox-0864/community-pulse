@@ -80,3 +80,23 @@ def fake_llm():
     def _make(payloads):
         return FakeLLMClient(payloads)
     return _make
+
+
+@pytest.fixture(autouse=True)
+def _aislar_credenciales_oci(monkeypatch):
+    """
+    Aísla los tests del `.env` real del usuario.
+
+    ``src.oci.config`` carga el `.env` con ``load_dotenv()`` al importar, así
+    que ``OCI_CONFIG`` y ``OCI_BUCKET_NAME`` quedan con valores reales si el
+    usuario tiene un `.env`. Este fixture los resetea a los defaults "sin
+    credenciales" antes de cada test para que sean deterministas.
+    """
+    from src.oci import config as oci_config
+
+    monkeypatch.setitem(oci_config.OCI_CONFIG, "user", None)
+    monkeypatch.setitem(oci_config.OCI_CONFIG, "tenancy", None)
+    monkeypatch.setitem(oci_config.OCI_CONFIG, "fingerprint", None)
+    monkeypatch.setitem(oci_config.OCI_CONFIG, "key_file", "~/.oci/oci_api_key.pem")
+    monkeypatch.setitem(oci_config.OCI_CONFIG, "region", "sa-saopaulo-1")
+    monkeypatch.setattr(oci_config, "OCI_BUCKET_NAME", "community-pulse-activos-marketing")
