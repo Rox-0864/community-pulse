@@ -1,5 +1,5 @@
 """
-CommunityLab — Cliente LLM unificado (Gemini/OpenAI/reglas).
+Community Pulse — Cliente LLM unificado (Gemini/OpenAI/reglas).
 
 Modos de ejecución:
 1. COMMUNITYLAB_LLM_BACKEND=rule_based → RuleBasedClient (offline, sin API keys)

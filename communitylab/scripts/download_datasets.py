@@ -1,5 +1,5 @@
 """
-CommunityLab — Script maestro de descarga de datasets.
+Community Pulse — Script maestro de descarga de datasets.
 
 Uso:
     python scripts/download_datasets.py --all                # Descarga todo
@@ -286,7 +286,7 @@ def _save(filename: str, interacciones: list):
 # MAIN
 # ============================================
 def main():
-    parser = argparse.ArgumentParser(description="Descarga datasets reales para CommunityLab")
+    parser = argparse.ArgumentParser(description="Descarga datasets reales para Community Pulse")
     parser.add_argument("--all", action="store_true", help="Descarga todos los datasets")
     parser.add_argument("--discord", action="store_true", help="Solo Discord Dialogues (HF)")
     parser.add_argument("--reddit", action="store_true", help="Solo Reddit Sentiment (Kaggle)")

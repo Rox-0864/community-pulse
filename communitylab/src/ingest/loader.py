@@ -1,5 +1,5 @@
 """
-CommunityLab — Ingestión de datos de la comunidad.
+Community Pulse — Ingestión de datos de la comunidad.
 
 Carga archivos (JSON/CSV), normaliza al formato estándar y valida.
 Responsable: Data Analysts + Software Engineer

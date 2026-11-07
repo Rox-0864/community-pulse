@@ -1,4 +1,4 @@
-# 🏗️ ARQUITECTURA — CommunityLab
+# 🏗️ ARQUITECTURA — Community Pulse
 
 > Diagramas en Mermaid, listos para incrustar en el README.md del repositorio.
 > Usar con GitHub (soporta Mermaid nativo) o renderizar en mermaid.live.
@@ -57,7 +57,7 @@ flowchart TB
     end
 
     subgraph STORAGE["6️⃣ OCI Object Storage (Always Free)"]
-        BUCKET["communitylab-activos-marketing"]
+        BUCKET["community-pulse-activos-marketing"]
         PATH1["activos/2026-semana-04/\npaquete-distribucion.json"]
         PATH2["decisiones/\nalertas-semana-04.json"]
         BUCKET --> PATH1
@@ -156,7 +156,7 @@ flowchart LR
         O_CLIENT["src/oci/oci_client.py"]
         O_STORE["src/oci/storage.py"]
         O_PERSIST["src/oci/persistence.py"]
-        O_BUCKET["📦 Bucket:\ncommunitylab-activos-marketing"]
+        O_BUCKET["📦 Bucket:\ncommunity-pulse-activos-marketing"]
     end
 
     subgraph LLMS["🌐 LLM Providers"]
@@ -245,7 +245,7 @@ flowchart TB
         end
 
         subgraph STORAGE_OCI["Object Storage (Always Free)"]
-            BUCK["Bucket: communitylab-activos-marketing"]
+            BUCK["Bucket: community-pulse-activos-marketing"]
         end
 
         subgraph AUTH["IAM / Auth"]
@@ -276,7 +276,7 @@ flowchart TB
 
 ```mermaid
 graph TD
-    ROOT["communitylab-activos-marketing<br/>📦 Bucket Always Free"]
+    ROOT["community-pulse-activos-marketing<br/>📦 Bucket Always Free"]
     ROOT --> S1["activos/"]
     ROOT --> S2["decisiones/"]
     ROOT --> S3["informes/"]
@@ -340,5 +340,5 @@ Generar el diagrama con **draw.io** (free) usando los mismos componentes. La ver
 
 ---
 
-*Arquitectura creada para equipo CommunityLab — Oracle ONE Hackathon G10*
+*Arquitectura creada para equipo Community Pulse — Oracle ONE Hackathon G10*
 *Los diagramas 1-5 están listos para pegar en los documentos del repo.*

@@ -1,5 +1,5 @@
 """
-CommunityLab — Reglas de escalamiento.
+Community Pulse — Reglas de escalamiento.
 
 Clasifica la gravedad de las alertas y define la acción a tomar.
 Responsable: Software Engineer

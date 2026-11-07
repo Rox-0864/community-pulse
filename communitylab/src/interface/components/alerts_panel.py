@@ -1,5 +1,5 @@
 """
-CommunityLab — Panel de alertas y decisiones (Dashboard).
+Community Pulse — Panel de alertas y decisiones (Dashboard).
 
 Componente container/presentational:
 - build_alert_items(): lógica PURA, sin Streamlit → testeable en CI.

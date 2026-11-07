@@ -1,5 +1,5 @@
 """
-CommunityLab — Configuración de OCI.
+Community Pulse — Configuración de OCI.
 
 NUNCA commitear credenciales reales. Usar variables de entorno.
 Responsable: Backend Developer
@@ -16,7 +16,7 @@ OCI_CONFIG = {
     "compartment_id": os.getenv("OCI_COMPARTMENT_ID"),
 }
 
-OCI_BUCKET_NAME = os.getenv("OCI_BUCKET_NAME", "communitylab-activos-marketing")
+OCI_BUCKET_NAME = os.getenv("OCI_BUCKET_NAME", "community-pulse-activos-marketing")
 
 
 def has_oci_credentials() -> bool:

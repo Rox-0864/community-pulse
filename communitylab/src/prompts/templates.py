@@ -1,5 +1,5 @@
 """
-CommunityLab — Helpers para construir prompts.
+Community Pulse — Helpers para construir prompts.
 
 Responsable: Data Scientists
 """

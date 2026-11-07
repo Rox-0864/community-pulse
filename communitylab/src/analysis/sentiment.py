@@ -1,5 +1,5 @@
 """
-CommunityLab — Análisis de sentimiento con LLM.
+Community Pulse — Análisis de sentimiento con LLM.
 
 Responsable: Data Scientist 1
 """

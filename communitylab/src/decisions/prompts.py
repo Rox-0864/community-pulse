@@ -1,5 +1,5 @@
 """
-CommunityLab — Prompts para el LLM de decisiones.
+Community Pulse — Prompts para el LLM de decisiones.
 
 Prompt especializado que interpreta contexto que las reglas simples
 no capturan (matices, ironías, contexto cultural).

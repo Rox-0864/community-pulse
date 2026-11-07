@@ -1,4 +1,4 @@
-# Preguntas de Seguimiento — Cuestionario Tech Lead CommunityLab
+# Preguntas de Seguimiento — Cuestionario Tech Lead Community Pulse
 
 ## Instrucciones de uso
 

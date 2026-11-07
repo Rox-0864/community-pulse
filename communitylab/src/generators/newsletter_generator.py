@@ -1,5 +1,5 @@
 """
-CommunityLab — Generador de destaque para Newsletter.
+Community Pulse — Generador de destaque para Newsletter.
 
 Responsable: Software Engineer + Data Scientists
 """

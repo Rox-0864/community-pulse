@@ -125,7 +125,7 @@ from src.decisions.recurring_topics import RecurringTopicsDetector
 from src.decisions.escalation import EscalationRules
 
 class DecisionEngine:
-    """Motor principal de decisiones de CommunityLab."""
+    """Motor principal de decisiones de Community Pulse."""
     
     def __init__(self, llm_client, historial: dict = None):
         self.llm = llm_client
@@ -694,7 +694,7 @@ Ahora el pipeline llama al DecisionEngine DESPUÉS de generar activos:
 ```python
 from src.decisions.engine import DecisionEngine
 
-class CommunityLabPipeline:
+class CommunityPulsePipeline:
     def __init__(self, llm_client, oci_client, historial=None):
         self.llm = llm_client
         self.oci = oci_client
@@ -914,4 +914,4 @@ Ese paralelo final es lo que hace ganar un hackathon.
 
 ---
 
-*Módulo diferencial creado para equipo CommunityLab — Oracle ONE Hackathon G10*
+*Módulo diferencial creado para equipo Community Pulse — Oracle ONE Hackathon G10*

@@ -1,5 +1,5 @@
 """
-CommunityLab — Detector de dudas recurrentes.
+Community Pulse — Detector de dudas recurrentes.
 
 Detecta cuándo la MISMA duda técnica aparece repetidamente.
 Responsable: Data Scientist 2

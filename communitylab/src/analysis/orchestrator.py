@@ -1,5 +1,5 @@
 """
-CommunityLab — Orquestador del análisis completo de un mensaje.
+Community Pulse — Orquestador del análisis completo de un mensaje.
 
 Pipeline: Sentimiento → Categorización → Relevancia → Categoría sugerida.
 Responsable: Data Scientists

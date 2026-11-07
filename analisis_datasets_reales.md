@@ -1,4 +1,4 @@
-# 📊 ANÁLISIS DE DATASETS REALES — CommunityLab
+# 📊 ANÁLISIS DE DATASETS REALES — Community Pulse
 
 > **Objetivo:** Determinar la viabilidad de obtener datos reales de comunidades digitales para el MVP
 > **Criterios evaluados:** Legalidad, dificultad técnica, tamaño, idioma, relevancia para el sector MarTech
@@ -185,7 +185,7 @@ import praw
 reddit = praw.Reddit(
     client_id="TU_ID",
     client_secret="TU_SECRET",
-    user_agent="communitylab/0.1 by tu_usuario"
+    user_agent="community-pulse/0.1 by tu_usuario"
 )
 
 # Buscar en r/learnprogramming posts recientes
@@ -328,4 +328,4 @@ Si el jurado pregunta de dónde salieron los datos:
 
 ---
 
-*Documento creado para equipo CommunityLab — Oracle ONE Hackathon G10*
+*Documento creado para equipo Community Pulse — Oracle ONE Hackathon G10*

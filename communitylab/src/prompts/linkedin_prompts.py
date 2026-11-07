@@ -1,5 +1,5 @@
 """
-CommunityLab — Prompts para copywriting de LinkedIn.
+Community Pulse — Prompts para copywriting de LinkedIn.
 
 Responsable: Data Scientists
 """

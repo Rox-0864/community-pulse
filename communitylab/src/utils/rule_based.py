@@ -1,5 +1,5 @@
 """
-CommunityLab — Cliente LLM basado en reglas (modo offline/demo).
+Community Pulse — Cliente LLM basado en reglas (modo offline/demo).
 
 Implementa la MISMA interfaz que el LLM real (chat.completions.create)
 pero decide con reglas deterministas. Permite ejecutar el pipeline

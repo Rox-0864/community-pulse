@@ -1,5 +1,5 @@
 """
-CommunityLab — Endpoints REST.
+Community Pulse — Endpoints REST.
 
 Ingesta en tiempo real: POST /webhook (async, responde 202 inmediato).
 Los jobs se procesan en background y se consultan con GET /jobs/{id}.
@@ -29,9 +29,9 @@ def _build_processor():
     async def process(payload: dict) -> dict:
         nonlocal pipeline
         if pipeline is None:
-            from src.orchestration.pipeline import CommunityLabPipeline
+            from src.orchestration.pipeline import CommunityPulsePipeline
             from src.utils.llm_client import create_llm_client
-            pipeline = CommunityLabPipeline(llm_client=create_llm_client())
+            pipeline = CommunityPulsePipeline(llm_client=create_llm_client())
         return await pipeline.process(payload)
 
     return process
@@ -46,7 +46,7 @@ async def lifespan(app: FastAPI):
     await app.state.worker.stop()
 
 
-app = FastAPI(title="CommunityLab API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="Community Pulse API", version="0.1.0", lifespan=lifespan)
 
 
 class ProcesarRequest(BaseModel):

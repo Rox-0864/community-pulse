@@ -1,5 +1,5 @@
 """
-CommunityLab — Puntuación de relevancia para marketing.
+Community Pulse — Puntuación de relevancia para marketing.
 
 Responsable: Data Scientist 3
 """

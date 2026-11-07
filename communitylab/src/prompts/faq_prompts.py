@@ -1,5 +1,5 @@
 """
-CommunityLab — Prompts para FAQ / Tips rápidos.
+Community Pulse — Prompts para FAQ / Tips rápidos.
 
 Responsable: Data Scientists
 """

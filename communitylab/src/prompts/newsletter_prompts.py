@@ -1,5 +1,5 @@
 """
-CommunityLab — Prompts para Newsletter / Community Highlights.
+Community Pulse — Prompts para Newsletter / Community Highlights.
 
 Responsable: Data Scientists
 """

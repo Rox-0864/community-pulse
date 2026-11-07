@@ -1,4 +1,4 @@
-# 🚀 CommunityLab — Motor Inteligente de Transformación y Distribución para Comunidades Digitales
+# 🚀 Community Pulse — Motor Inteligente de Transformación y Distribución para Comunidades Digitales
 
 > **Hackathon ONE G10 — Oracle Next Education & Alura**
 > Convierte la actividad orgánica de una comunidad digital en activos de marketing listos para publicar.
@@ -7,7 +7,7 @@
 
 ## 📋 Descripción
 
-CommunityLab ingiere interacciones de comunidades digitales (Discord, Slack, foros, formularios), las analiza con LLMs (sentimiento, temas, relevancia) y genera automáticamente **activos de distribución** para marketing:
+Community Pulse ingiere interacciones de comunidades digitales (Discord, Slack, foros, formularios), las analiza con LLMs (sentimiento, temas, relevancia) y genera automáticamente **activos de distribución** para marketing:
 
 - 📣 **Posts para LinkedIn** con tono inspirador y hashtags
 - 📧 **Resúmenes semanales** (Community Highlights) para newsletters
@@ -44,7 +44,7 @@ flowchart TB
     end
 
     subgraph OCI["OCI Object Storage"]
-        B["communitylab-activos-marketing"]
+        B["community-pulse-activos-marketing"]
     end
 
     subgraph UI["Streamlit"]

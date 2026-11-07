@@ -1,5 +1,5 @@
 """
-CommunityLab — Job Worker asíncrono con asyncio.Queue.
+Community Pulse — Job Worker asíncrono con asyncio.Queue.
 
 Patrón: accept → queue → process → result (nunca bloquea al cliente).
 Processor se inyecta, NO importa el pipeline directamente (Dependency Inversion).

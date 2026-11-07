@@ -14,7 +14,7 @@ import json
 import pytest
 
 from src.utils.rule_based import RuleBasedClient
-from src.orchestration.pipeline import CommunityLabPipeline
+from src.orchestration.pipeline import CommunityPulsePipeline
 
 
 @pytest.mark.asyncio
@@ -23,7 +23,7 @@ async def test_pipeline_end_to_end_offline():
     Cadena completa: testimonio → caso_exito → post LinkedIn,
     duda → faq_tip, con decisiones y resumen ejecutivo.
     """
-    pipeline = CommunityLabPipeline(llm_client=RuleBasedClient())
+    pipeline = CommunityPulsePipeline(llm_client=RuleBasedClient())
     resultado = await pipeline.process({
         "origen_comunidad": "discord",
         "periodo_referencia": "Semana_04",

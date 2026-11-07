@@ -1,5 +1,5 @@
 """
-CommunityLab — Prepara el dataset combinado listo para el pipeline.
+Community Pulse — Prepara el dataset combinado listo para el pipeline.
 
 Uso:
     python scripts/prepare_samples.py                # Convierte data/real/*.json
@@ -58,7 +58,7 @@ def limpiar_interaccion(interaccion: dict, origen: str) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Prepara dataset combinado de CommunityLab")
+    parser = argparse.ArgumentParser(description="Prepara dataset combinado de Community Pulse")
     parser.add_argument("--half", action="store_true", help="Reduce cada fuente a la mitad")
     parser.add_argument("--mini", action="store_true", help="Solo 50 por fuente (demo rápida)")
     args = parser.parse_args()

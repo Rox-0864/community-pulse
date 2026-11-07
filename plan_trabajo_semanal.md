@@ -1,4 +1,4 @@
-# 📅 PLAN DE TRABAJO SEMANAL — CommunityLab
+# 📅 PLAN DE TRABAJO SEMANAL — Community Pulse
 
 > **Duración total: 10 días hábiles**
 > **Reunión diaria obligatoria: Daily Standup (15 min, primera hora del día)**

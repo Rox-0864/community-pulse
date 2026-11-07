@@ -1,5 +1,5 @@
 """
-CommunityLab — Prompts para análisis de sentimiento.
+Community Pulse — Prompts para análisis de sentimiento.
 
 Responsable: Data Scientists
 """

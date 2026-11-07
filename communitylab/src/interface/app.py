@@ -1,5 +1,5 @@
 """
-CommunityLab — Interfaz Streamlit.
+Community Pulse — Interfaz Streamlit.
 
 Dashboard: procesa un lote de interacciones (offline con RuleBasedClient
 o con LLM real según COMMUNITYLAB_LLM_BACKEND) y muestra métricas de la
@@ -17,14 +17,14 @@ import streamlit as st
 from src.interface.components.alerts_panel import render_alerts
 
 st.set_page_config(
-    page_title="CommunityLab",
+    page_title="Community Pulse",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 # Sidebar con navegación
-st.sidebar.title("🚀 CommunityLab")
+st.sidebar.title("🚀 Community Pulse")
 st.sidebar.markdown("---")
 
 page = st.sidebar.radio(
@@ -51,11 +51,11 @@ _HISTORIAL_DEMO = {
 
 def _correr_pipeline(payload: dict, usar_historial: bool) -> dict:
     """Ejecuta el pipeline completo (async) dentro del script de Streamlit."""
-    from src.orchestration.pipeline import CommunityLabPipeline
+    from src.orchestration.pipeline import CommunityPulsePipeline
     from src.utils.llm_client import create_llm_client
 
     historial = _HISTORIAL_DEMO if usar_historial else None
-    pipeline = CommunityLabPipeline(llm_client=create_llm_client(), historial=historial)
+    pipeline = CommunityPulsePipeline(llm_client=create_llm_client(), historial=historial)
     return asyncio.run(pipeline.process(payload))
 
 

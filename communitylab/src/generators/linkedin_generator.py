@@ -1,5 +1,5 @@
 """
-CommunityLab — Generador de posts para LinkedIn.
+Community Pulse — Generador de posts para LinkedIn.
 
 Responsable: Software Engineer + Data Scientists
 """

@@ -1,5 +1,5 @@
 """
-CommunityLab — Almacenamiento en OCI Object Storage.
+Community Pulse — Almacenamiento en OCI Object Storage.
 
 Responsable: Backend Developer
 """

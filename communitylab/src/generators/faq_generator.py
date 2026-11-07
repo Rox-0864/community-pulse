@@ -1,5 +1,5 @@
 """
-CommunityLab — Generador de FAQ / Tip rápido.
+Community Pulse — Generador de FAQ / Tip rápido.
 
 Responsable: Data Analyst 2 + Data Scientists
 """

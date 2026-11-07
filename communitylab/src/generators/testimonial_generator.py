@@ -1,5 +1,5 @@
 """
-CommunityLab — Generador de casos de éxito / testimonios.
+Community Pulse — Generador de casos de éxito / testimonios.
 
 Responsable: Data Scientist 3
 """

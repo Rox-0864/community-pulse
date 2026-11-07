@@ -1,5 +1,5 @@
 """
-CommunityLab — Pipeline principal.
+Community Pulse — Pipeline principal.
 
 Conecta: Ingest → Analysis → Decisions → Generators → OCI.
 Responsable: Software Engineer
@@ -14,8 +14,8 @@ from src.orchestration.router import ContentRouter
 from src.decisions.engine import DecisionEngine
 
 
-class CommunityLabPipeline:
-    """Pipeline principal del sistema CommunityLab."""
+class CommunityPulsePipeline:
+    """Pipeline principal del sistema Community Pulse."""
 
     def __init__(self, llm_client, oci_storage=None, historial=None):
         self.llm = llm_client

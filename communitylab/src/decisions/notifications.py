@@ -1,5 +1,5 @@
 """
-CommunityLab — Genera las alertas/notificaciones.
+Community Pulse — Genera las alertas/notificaciones.
 
 Convierte las decisiones en notificaciones accionables para el community manager.
 Responsable: Software Engineer + Backend Developer

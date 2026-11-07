@@ -1,5 +1,5 @@
 """
-CommunityLab — Detector de miembros en riesgo de abandono.
+Community Pulse — Detector de miembros en riesgo de abandono.
 
 Monitorea la trayectoria de sentimiento de cada miembro.
 Responsable: Data Scientist 1

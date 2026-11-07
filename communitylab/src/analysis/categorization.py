@@ -1,5 +1,5 @@
 """
-CommunityLab — Categorización de temas con LLM.
+Community Pulse — Categorización de temas con LLM.
 
 Responsable: Data Scientist 2
 """

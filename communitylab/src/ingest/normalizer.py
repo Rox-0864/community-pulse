@@ -1,5 +1,5 @@
 """
-CommunityLab — Normalización de mensajes al formato estándar.
+Community Pulse — Normalización de mensajes al formato estándar.
 
 Convierte mensajes de cualquier fuente (Discord, Slack, CSV, JSON)
 al formato interno del sistema.

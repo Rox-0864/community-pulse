@@ -1,4 +1,4 @@
-# 🧭 GUÍA TÉCNICA POR MÓDULO — CommunityLab
+# 🧭 GUÍA TÉCNICA POR MÓDULO — Community Pulse
 
 > **Para cada módulo encontrarás:**
 > - 🎯 Qué hace (responsabilidad única)
@@ -705,8 +705,8 @@ from src.generators.linkedin_generator import generate_linkedin_post
 from src.generators.newsletter_generator import generate_newsletter
 from src.oci.persistence import save_assets_to_oci
 
-class CommunityLabPipeline:
-    """Pipeline principal del sistema CommunityLab."""
+class CommunityPulsePipeline:
+    """Pipeline principal del sistema Community Pulse."""
     
     def __init__(self, llm_client, oci_client):
         self.llm = llm_client
@@ -823,14 +823,14 @@ class ContentRouter:
 # tests/test_orchestration.py
 import pytest
 from unittest.mock import AsyncMock, Mock
-from src.orchestration.pipeline import CommunityLabPipeline
+from src.orchestration.pipeline import CommunityPulsePipeline
 
 @pytest.mark.asyncio
 async def test_pipeline_end_to_end():
     mock_llm = Mock()
     mock_oci = AsyncMock()
     
-    pipeline = CommunityLabPipeline(mock_llm, mock_oci)
+    pipeline = CommunityPulsePipeline(mock_llm, mock_oci)
     
     input_data = {
         "origen_comunidad": "Discord",
@@ -1077,7 +1077,7 @@ class OCIStorageClient:
         self.config = OCI_CONFIG
         self.object_storage_client = oci.object_storage.ObjectStorageClient(self.config)
         self.namespace = self.object_storage_client.get_namespace().data
-        self.bucket_name = "communitylab-activos-marketing"
+        self.bucket_name = "community-pulse-activos-marketing"
     
     def create_bucket_if_not_exists(self):
         """Crea el bucket si no existe."""
@@ -1154,7 +1154,7 @@ async def save_assets_to_oci(oci_storage: OCIStorage, package: dict) -> dict:
     Guarda el paquete completo de activos en OCI.
     
     Estructura del bucket:
-    communitylab-activos-marketing/
+    community-pulse-activos-marketing/
     └── activos/
         └── 2026-semana-04/
             ├── paquete-completo.json    ← Todo junto
@@ -1277,14 +1277,14 @@ import streamlit as st
 
 # Configuración de la página
 st.set_page_config(
-    page_title="CommunityLab",
+    page_title="Community Pulse",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # Sidebar con navegación
-st.sidebar.title("🚀 CommunityLab")
+st.sidebar.title("🚀 Community Pulse")
 st.sidebar.markdown("---")
 
 page = st.sidebar.radio(
@@ -1465,4 +1465,4 @@ def test_dashboard_loads():
 
 ---
 
-*Guía creada para el equipo CommunityLab — Oracle ONE Hackathon G10*
+*Guía creada para el equipo Community Pulse — Oracle ONE Hackathon G10*

@@ -1,5 +1,5 @@
 """
-CommunityLab — Motor principal de decisiones.
+Community Pulse — Motor principal de decisiones.
 
 Recibe el análisis de todos los mensajes del lote y decide qué acciones
 ejecutar basándose en reglas + señales del LLM.
@@ -26,7 +26,7 @@ from src.decisions.notifications import NotificationBuilder
 
 
 class DecisionEngine:
-    """Motor principal de decisiones de CommunityLab."""
+    """Motor principal de decisiones de Community Pulse."""
 
     def __init__(self, llm_client, historial: dict = None):
         self.llm = llm_client

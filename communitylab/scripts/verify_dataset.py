@@ -1,5 +1,5 @@
 """
-CommunityLab — Verifica que los datos cumplan el contrato del pipeline.
+Community Pulse — Verifica que los datos cumplan el contrato del pipeline.
 
 Uso:
     python scripts/verify_dataset.py                          # Valida el dataset combinado
@@ -56,7 +56,7 @@ def check_interaccion(i, idx, origen):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Verifica formato del dataset CommunityLab")
+    parser = argparse.ArgumentParser(description="Verifica formato del dataset Community Pulse")
     parser.add_argument("--file", type=str, default=None, help="Archivo a validar (default: dataset_combinado)")
     parser.add_argument("--quiet", action="store_true", help="Solo código de salida")
     args = parser.parse_args()

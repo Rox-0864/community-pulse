@@ -1,5 +1,5 @@
 """
-CommunityLab — Router condicional.
+Community Pulse — Router condicional.
 
 Decide qué generadores ejecutar según la categoría del mensaje.
 Responsable: Software Engineer

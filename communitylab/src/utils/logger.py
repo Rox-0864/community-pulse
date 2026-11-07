@@ -1,5 +1,5 @@
 """
-CommunityLab — Logger centralizado.
+Community Pulse — Logger centralizado.
 
 Responsable: Backend Developer
 """
@@ -11,7 +11,7 @@ import sys
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
 
-def setup_logger(name: str = "communitylab") -> logging.Logger:
+def setup_logger(name: str = "community-pulse") -> logging.Logger:
     """Configura y retorna un logger para el módulo."""
     logger = logging.getLogger(name)
     if not logger.handlers:

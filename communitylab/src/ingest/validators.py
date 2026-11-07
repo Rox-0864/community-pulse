@@ -1,5 +1,5 @@
 """
-CommunityLab — Validación de mensajes.
+Community Pulse — Validación de mensajes.
 
 Responsable: Software Engineer
 """

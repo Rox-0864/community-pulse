@@ -1,4 +1,4 @@
-# 🔧 CommunityLab — Reglamento del Repositorio
+# 🔧 Community Pulse — Reglamento del Repositorio
 
 > **Este archivo es la guía de trabajo para todo el equipo. Léelo ANTES de hacer tu primer commit.**
 
@@ -216,7 +216,7 @@ git tag -a v1.0.0 -m "Release: demo listo para presentar"
 ## 📌 Resumen rápido (pegar en el Discord/Slack del equipo)
 
 ```
-📋 REGLAS GIT — CommunityLab
+📋 REGLAS GIT — Community Pulse
 
 ✅ SIEMPRE crear branch antes de trabajar
 ✅ Commits con formato: tipo(scope): descripción
