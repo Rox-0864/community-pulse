@@ -83,9 +83,9 @@ community-pulse/
 │   ├── oci/                 # Integración OCI Object Storage
 │   ├── interface/           # Streamlit (dashboard + panel de alertas)
 │   ├── api/                 # API REST (webhook asíncrono + jobs)
-│   ├── bot/                 # Bot Discord (pendiente ingreso/integración)
+│   ├── bot/                 # Bot Discord (ingesta en vivo + comando !pulse)
 │   └── utils/               # LLM clients (Gemini/OpenAI/rule_based)
-├── tests/                   # 38 tests (pytest)
+├── tests/                   # 87 tests (pytest)
 ├── data/sample/             # Demo: messages.json (5 interacciones)
 ├── scripts/                 # Descarga y preparación de datasets
 ├── notebooks/               # Notebooks exploratorios
@@ -163,8 +163,39 @@ curl http://localhost:8000/jobs/0b0ded910dae
 ### ✅ Opción C — Tests
 
 ```bash
-python3 -m pytest tests/ -q   # 38 tests
+python3 -m pytest tests/ -q   # 87 tests
 ```
+
+### 🤖 Opción D — Bot de Discord
+
+El bot tiene dos modos complementarios:
+
+- **Ingesta en vivo**: cada mensaje de un miembro se normaliza y se envía al
+  webhook de la API (`JobWorker` → pipeline → dashboard). Los resultados se
+  ven en el dashboard.
+- **Comando `!pulse`**: procesa bajo demanda el historial reciente del canal y
+  publica el resumen inline (miembros en riesgo, mentorías, testimonios, activos).
+
+```bash
+# 1. Configurá el token en .env (Discord Developer Portal → Bot)
+#    DISCORD_BOT_TOKEN=...
+#    WEBHOOK_URL=http://localhost:8000/webhook
+
+# 2. Levantá la API (para la ingesta en vivo)
+COMMUNITYLAB_LLM_BACKEND=rule_based uvicorn src.api.endpoints:app --port 8000
+
+# 3. En otra terminal, ejecutá el bot
+COMMUNITYLAB_LLM_BACKEND=rule_based python -m src.bot.discord_bot
+```
+
+| Comando | Descripción |
+|---------|-------------|
+| `!pulse` | Analiza los últimos 50 mensajes del canal y publica el resumen |
+| `!pulse 25` | Analiza los últimos 25 mensajes (límite entre 1 y 200) |
+
+> La ingesta en vivo requiere la API corriendo en `WEBHOOK_URL`. Para una
+> señal visual, seteá `DISCORD_REACT_ON_INGEST=1` y el bot reaccionará 👀 a
+> cada mensaje ingerido.
 
 ---
 
@@ -234,8 +265,8 @@ python3 -m pytest tests/ -q   # 38 tests
 ## 🏆 Diferenciales
 
 - [x] **Motor de decisiones**: detección de miembros en riesgo + mentorías (implementado y testeado)
+- [x] Bot de Discord (ingesta en vivo `on_message` → webhook + comando `!pulse`)
 - [ ] Despliegue en OCI Compute
-- [ ] Bot de Discord (código base en `src/bot/`; requiere acceso a servidor)
 - [ ] Generación de imágenes
 - [ ] Flujo n8n con webhooks
 - [ ] LangGraph para orquestación condicional
