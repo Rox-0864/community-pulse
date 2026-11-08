@@ -27,7 +27,6 @@ def analyze_sentiment(text: str, llm_client) -> dict:
     )
 
     response = llm_client.chat.completions.create(
-        model="gemini-2.0-flash",  # o el modelo elegido
         messages=messages,
         response_format={"type": "json_object"},
     )

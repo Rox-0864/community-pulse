@@ -27,7 +27,6 @@ Formato:
     messages = build_prompt(NEWSLETTER_SYSTEM_PROMPT, prompt)
 
     response = await llm_client.chat.completions.create(
-        model="gemini-2.0-flash",
         messages=messages,
         response_format={"type": "json_object"},
     )

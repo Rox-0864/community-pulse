@@ -26,7 +26,6 @@ Califica del 0 al 1:
 Retorna JSON con scores individuales, promedio ponderado y justificación.
 """
     response = llm_client.chat.completions.create(
-        model="gemini-2.0-flash",
         messages=[
             {"role": "system", "content": "Eres un editor de contenido de marketing tech."},
             {"role": "user", "content": prompt},

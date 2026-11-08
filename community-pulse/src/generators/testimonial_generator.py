@@ -22,7 +22,6 @@ Formato:
 - CTA para la comunidad
 """
     response = await llm_client.chat.completions.create(
-        model="gemini-2.0-flash",
         messages=[
             {"role": "system", "content": "Eres un storyteller de casos de éxito tech."},
             {"role": "user", "content": prompt},

@@ -33,7 +33,6 @@ El post debe:
     messages = build_prompt(LINKEDIN_SYSTEM_PROMPT, user_prompt)
 
     response = await llm_client.chat.completions.create(
-        model="gemini-2.0-flash",
         messages=messages,
         response_format={"type": "json_object"},
     )

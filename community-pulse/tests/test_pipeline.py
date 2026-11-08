@@ -150,3 +150,28 @@ async def test_duda_pura_no_genera_alerta_miembro():
     assert not any(a["tipo"] == "alerta_sentimiento_puntual" for a in acciones)
     # Sí se detecta como duda técnica → FAQ
     assert any(a["tipo"] == "generar_faq" for a in acciones)
+
+
+def test_fallback_usa_rule_based_si_primary_falla():
+    """El FallbackLLMClient delega en rule_based cuando el principal falla."""
+    from src.utils.llm_client import FallbackLLMClient
+    from src.utils.rule_based import RuleBasedClient
+
+    class FailingClient:
+        """Cliente que simula un LLM sin acceso (sin internet / API caída)."""
+        class chat:
+            class completions:
+                @staticmethod
+                def create(model=None, messages=None, response_format=None):
+                    raise ConnectionError("sin internet")
+
+    client = FallbackLLMClient(FailingClient(), RuleBasedClient())
+    resp = client.chat.completions.create(
+        messages=[
+            {"role": "system", "content": "Eres un experto en análisis de sentimiento de comunidades tecnológicas."},
+            {"role": "user", "content": "Analiza el sentimiento de este mensaje:\n\nNo me funciona el bucket"},
+        ],
+    )
+
+    sent = json.loads(resp.choices[0].message.content)
+    assert sent["sentiment"] == "negativo"

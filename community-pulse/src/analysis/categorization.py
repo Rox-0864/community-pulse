@@ -38,7 +38,6 @@ Categorías disponibles:
 Retorna JSON con: categorias (lista de strings), confianza (float)
 """
     response = llm_client.chat.completions.create(
-        model="gemini-2.0-flash",
         messages=[
             {"role": "system", "content": "Eres un clasificador de contenido de comunidades."},
             {"role": "user", "content": prompt},

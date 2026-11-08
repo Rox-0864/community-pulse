@@ -95,7 +95,7 @@ class RuleBasedChat:
         ("storyteller de casos de éxito", "testimonial"),
     ]
 
-    def create(self, model: str, messages: list, response_format: dict = None):
+    def create(self, model: str = None, messages: list = None, response_format: dict = None):
         """Retorna una respuesta JSON determinista según el system prompt."""
         system_prompt = next(
             (m["content"] for m in messages if m["role"] == "system"), ""

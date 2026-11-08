@@ -62,7 +62,7 @@ class _FakeCompletions:
     def __init__(self, client):
         self._client = client
 
-    def create(self, model, messages, response_format=None):
+    def create(self, model=None, messages=None, response_format=None):
         system = next((m["content"] for m in messages if m["role"] == "system"), "")
         user = next((m["content"] for m in messages if m["role"] == "user"), "")
         self._client.calls.append({"system": system, "user": user})
@@ -80,6 +80,17 @@ def fake_llm():
     def _make(payloads):
         return FakeLLMClient(payloads)
     return _make
+
+
+@pytest.fixture(autouse=True)
+def _forzar_llm_rule_based_en_tests(monkeypatch):
+    """
+    Fuerza el backend offline en tests para no depender del ``.env`` real.
+
+    Sin esto, si el usuario tiene ``GEMINI_API_KEY`` en su ``.env``, los tests
+    de endpoints dispararían llamadas reales a la API (lentas y con costo).
+    """
+    monkeypatch.setenv("COMMUNITYLAB_LLM_BACKEND", "rule_based")
 
 
 @pytest.fixture(autouse=True)
