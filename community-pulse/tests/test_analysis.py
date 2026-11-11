@@ -157,3 +157,36 @@ def test_full_analysis_sin_texto_lanza_error(fake_llm):
 def test_sugerir_categoria(sentimiento, categorias, score, esperado):
     relevancia = {"score": score}
     assert _sugerir_categoria(sentimiento, categorias, relevancia) == esperado
+
+
+def test_sugerir_categoria_prioriza_duda_sobre_sentimiento():
+    """Una duda técnica gana sobre el sentimiento positivo (se sugiere FAQ)."""
+    assert _sugerir_categoria(
+        {"etiqueta": "positivo"}, ["duda_tecnica"], {"score": 0.85}
+    ) == "faq_tip"
+
+
+def test_sugerir_categoria_umbral_caso_exito_en_0_8():
+    """El umbral de caso_exito es > 0.8 estricto (alineado con decisiones)."""
+    # Exactamente 0.8 NO alcanza caso_exito.
+    assert _sugerir_categoria(
+        {"etiqueta": "muy_positivo"}, [], {"score": 0.8}
+    ) == "newsletter_highlight"
+    # Apenas por encima, sí.
+    assert _sugerir_categoria(
+        {"etiqueta": "muy_positivo"}, [], {"score": 0.81}
+    ) == "caso_exito"
+
+
+def test_sugerir_categoria_claves_faltantes_no_crashea():
+    """Claves faltantes degradan con gracia en vez de lanzar KeyError."""
+    # Sin etiqueta → neutral (default) → newsletter_highlight.
+    assert _sugerir_categoria({}, [], {"score": 0.4}) == "newsletter_highlight"
+    # Sin score → 0.0 → positivo no alcanza caso_exito → newsletter.
+    assert _sugerir_categoria(
+        {"etiqueta": "positivo"}, [], {}
+    ) == "newsletter_highlight"
+    # categorias None → [] → no hay duda; negativo sigue alertando.
+    assert _sugerir_categoria(
+        {"etiqueta": "negativo"}, None, {}
+    ) == "alerta_sentimiento"

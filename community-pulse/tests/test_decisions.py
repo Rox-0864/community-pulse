@@ -220,6 +220,30 @@ def test_engine_alerta_miembro_en_umbral_exacto():
     assert alertas[0]["accion_sugerida"] == "contactar_individualmente"
 
 
+def test_duda_tecnica_negativa_genera_faq_y_alerta():
+    """
+    Regresión: un miembro frustrado que pide ayuda técnica debe generar
+    TANTO el FAQ (contenido) COMO la alerta de sentimiento (riesgo).
+
+    Antes la regla `faq_tip` cortaba la ejecución y se perdía la alerta
+    de sentimiento para quien pide ayuda con frustración.
+    """
+    engine = DecisionEngine(llm_client=Mock())
+    batch = {
+        "mensajes_analizados": [{
+            "id": "8",
+            "autor": "João",
+            "categoria_sugerida": "faq_tip",
+            "temas": ["oci"],
+            "sentimiento": {"etiqueta": "negativo", "score": 0.2},
+        }]
+    }
+    resultado = engine.process_batch(batch)
+    tipos = {a["tipo"] for a in resultado["acciones_recomendadas"]}
+    assert "generar_faq" in tipos
+    assert "alerta_sentimiento_puntual" in tipos
+
+
 def test_resumen_ejecutivo():
     """El resumen cuenta las acciones por tipo."""
     engine = DecisionEngine(llm_client=Mock())

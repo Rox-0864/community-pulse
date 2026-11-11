@@ -17,7 +17,7 @@ Responsables: Software Engineer + Data Scientists
 
 from collections import Counter
 from datetime import datetime
-from typing import Optional
+
 
 from src.decisions.member_risk import MemberRiskDetector
 from src.decisions.recurring_topics import RecurringTopicsDetector
@@ -62,11 +62,9 @@ class DecisionEngine:
             autor = msg.get("autor", "anónimo")
             autores_en_batch.setdefault(autor, []).append(msg)
 
-        # Decisión por mensaje
+        # Decisión por mensaje (un mensaje puede disparar varias acciones)
         for msg in batch_analysis.get("mensajes_analizados", []):
-            accion = self._decidir_por_mensaje(msg)
-            if accion:
-                acciones.append(accion)
+            acciones.extend(self._decidir_por_mensaje(msg))
 
         # Detección de dudas recurrentes (buscar en historial)
         dudas = self.recurring_detector.detect(
@@ -141,40 +139,47 @@ class DecisionEngine:
     # ------------------------------------------------------------------
     # Lógica de decisión
     # ------------------------------------------------------------------
-    def _decidir_por_mensaje(self, msg: dict) -> Optional[dict]:
-        """Reglas de decisión para un mensaje individual."""
+    def _decidir_por_mensaje(self, msg: dict) -> list[dict]:
+        """Reglas de decisión para un mensaje individual.
+
+        Retorna UNA LISTA de acciones (puede estar vacía): un mensaje puede
+        disparar varias acciones a la vez. Ej.: una duda técnica con
+        sentimiento negativo genera FAQ (contenido) Y alerta de sentimiento
+        (riesgo), no una u otra.
+        """
+        acciones = []
         categoria = self._get(msg, "categoria_sugerida")
 
         # R1: Testimonio de alto valor → publicar prioritario
         if categoria == "caso_exito" and self._get(msg, "relevancia", 0) > 0.8:
-            return {
+            acciones.append({
                 "tipo": "publicar_prioritario",
                 "mensaje_id": msg.get("id"),
                 "razon": f"Testimonio con relevancia {self._get(msg, 'relevancia', 0):.2f}",
                 "prioridad": "ALTA",
                 "activo_sugerido": "post_linkedin"
-            }
+            })
 
         # R2: Duda técnica → FAQ (se combina con detección recurrente)
         if categoria == "faq_tip":
-            return {
+            acciones.append({
                 "tipo": "generar_faq",
                 "mensaje_id": msg.get("id"),
                 "razon": "Duda técnica identificada",
                 "activo_sugerido": "faq_tip"
-            }
+            })
 
         # R3: Sentimiento negativo fuerte → alerta de riesgo
         sentimiento = self._get(msg, "sentimiento", {}) or {}
         if sentimiento.get("etiqueta") in ["negativo", "muy_negativo"]:
-            return {
+            acciones.append({
                 "tipo": "alerta_sentimiento_puntual",
                 "mensaje_id": msg.get("id"),
                 "razon": f"Sentimiento {sentimiento.get('etiqueta')} detectado",
                 "accion_sugerida": "monitorear"
-            }
+            })
 
-        return None
+        return acciones
 
     def _build_resumen(self, acciones: list[dict]) -> dict:
         """Construye el resumen ejecutivo para el dashboard."""
