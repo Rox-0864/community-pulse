@@ -62,6 +62,34 @@ async def test_pipeline_end_to_end_offline():
     assert "faq_tips" in resultado["activos_distribucion_generados"]
 
 
+@pytest.mark.asyncio
+async def test_faqs_no_duplicados_por_mensaje():
+    """
+    Dos dudas técnicas distintas deben generar DOS FAQs distintos, uno por
+    cada mensaje (no dos FAQs del mismo mensaje).
+
+    Regresión: ``generate_asset_for()`` ignoraba el ``mensaje_id`` de cada
+    acción y siempre generaba desde el mensaje de mayor relevancia, así que
+    dos acciones ``generar_faq`` producían dos FAQs idénticos (mismo autor).
+    """
+    pipeline = CommunityPulsePipeline(llm_client=RuleBasedClient())
+    resultado = await pipeline.process({
+        "origen_comunidad": "discord",
+        "periodo_referencia": "Semana_04",
+        "interacciones": [
+            {"autor": "Lucas", "texto": "No entiendo cómo usar OCI, el tutorial no me sirve"},
+            {"autor": "Ana", "texto": "No entiendo cómo estructurar nodos condicionales en LangGraph"},
+        ],
+    })
+
+    faqs = resultado["activos_distribucion_generados"]["faq_tips"]
+    assert len(faqs) == 2
+    origenes = {faq["origen"] for faq in faqs}
+    assert origenes == {"Duda de Lucas", "Duda de Ana"}
+    temas = {faq["tema"] for faq in faqs}
+    assert temas == {"oci", "langgraph"}
+
+
 def test_rule_based_client_contract_sync_and_async():
     """
     El client rule-based soporta las DOS llamadas del codebase:

@@ -59,10 +59,14 @@ class CommunityPulsePipeline:
         assets = {}
         for accion in decisiones["acciones_recomendadas"]:
             if accion["tipo"] == "publicar_prioritario":
-                activo = await generate_asset_for(analyses, "caso_exito", self.llm)
+                activo = await generate_asset_for(
+                    analyses, "caso_exito", self.llm, accion.get("mensaje_id")
+                )
                 assets.setdefault("casos_exito", []).append(activo)
             elif accion["tipo"] == "generar_faq":
-                activo = await generate_asset_for(analyses, "faq_tip", self.llm)
+                activo = await generate_asset_for(
+                    analyses, "faq_tip", self.llm, accion.get("mensaje_id")
+                )
                 assets.setdefault("faq_tips", []).append(activo)
             elif accion["tipo"] == "alerta_sentimiento_puntual":
                 pass  # las alertas van a decisions/notificaciones, no a activos
@@ -112,8 +116,14 @@ class CommunityPulsePipeline:
         }
 
 
-async def generate_asset_for(analyses, category, llm_client) -> dict:
-    """Busca el análisis más relevante de la categoría y genera el activo."""
+async def generate_asset_for(analyses, category, llm_client, message_id=None) -> dict:
+    """Genera el activo para el mensaje que disparó la acción.
+
+    Si ``message_id`` está presente, genera sobre ESE análisis específico;
+    si no, elige el de mayor relevancia de la categoría (comportamiento
+    anterior). Esto evita que dos acciones de la misma categoría generen
+    el activo desde el mismo mensaje.
+    """
     from src.orchestration.router import ContentRouter
 
     router = ContentRouter()
@@ -127,7 +137,14 @@ async def generate_asset_for(analyses, category, llm_client) -> dict:
     if not candidates:
         candidates = analyses
 
-    best = max(candidates, key=lambda a: a["analisis"]["relevancia_marketing"]["score"])
+    best = None
+    if message_id:
+        best = next((a for a in candidates if a.get("id") == message_id), None)
+
+    # Fallback: sin id (o no coincide) → el de mayor relevancia.
+    if best is None:
+        best = max(candidates, key=lambda a: a["analisis"]["relevancia_marketing"]["score"])
+
     gen = generators[0]
     return await gen(best, llm_client)
 
