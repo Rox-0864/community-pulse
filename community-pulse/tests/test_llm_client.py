@@ -73,6 +73,62 @@ class _Respuesta:
         self.choices = [_Choice(json.dumps(payload))]
 
 
+def test_gemini_client_forza_json_mode(monkeypatch):
+    """response_format=json_object fuerza response_mime_type en Gemini."""
+    monkeypatch.setenv("GEMINI_API_KEY", "dummy_key")
+
+    client = GeminiClient()
+    capturado = {}
+
+    class FakeResponse:
+        text = '{"sentiment": "neutral"}'
+
+    def fake_generate_content(**kwargs):
+        capturado.update(kwargs)
+        return FakeResponse()
+
+    monkeypatch.setattr(client._client.models, "generate_content", fake_generate_content)
+
+    resp = client._create(
+        messages=[
+            {"role": "system", "content": "Analiza el sentimiento."},
+            {"role": "user", "content": "texto de prueba"},
+        ],
+        response_format={"type": "json_object"},
+    )
+
+    config = capturado["config"]
+    assert config is not None
+    assert config.response_mime_type == "application/json"
+    assert resp.choices[0].message.content == '{"sentiment": "neutral"}'
+
+
+def test_gemini_client_sin_response_format_no_forza_json(monkeypatch):
+    """Sin response_format, no se fuerza JSON (config None)."""
+    monkeypatch.setenv("GEMINI_API_KEY", "dummy_key")
+
+    client = GeminiClient()
+    capturado = {}
+
+    class FakeResponse:
+        text = "texto libre"
+
+    def fake_generate_content(**kwargs):
+        capturado.update(kwargs)
+        return FakeResponse()
+
+    monkeypatch.setattr(client._client.models, "generate_content", fake_generate_content)
+
+    client._create(
+        messages=[
+            {"role": "system", "content": "Algo."},
+            {"role": "user", "content": "otra cosa"},
+        ],
+    )
+
+    assert capturado["config"] is None
+
+
 def test_fallback_reintenta_429_y_luego_ok(monkeypatch):
     """Un 429 transitorio se reintenta antes de caer al respaldo."""
     import src.utils.llm_client as llm_mod

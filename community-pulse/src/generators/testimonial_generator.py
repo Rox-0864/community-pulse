@@ -23,7 +23,19 @@ Formato:
 """
     response = await llm_client.chat.completions.create(
         messages=[
-            {"role": "system", "content": "Eres un storyteller de casos de éxito tech."},
+            {
+                "role": "system",
+                "content": (
+                    "Eres un storyteller de casos de éxito tech.\n\n"
+                    "## Formato de respuesta (SOLO JSON):\n"
+                    "{\n"
+                    '  "titulo": "Título del caso",\n'
+                    '  "narrativa": "3-4 oraciones",\n'
+                    '  "resultado": "resultado concreto",\n'
+                    '  "cta": "llamado a la acción para la comunidad"\n'
+                    "}"
+                ),
+            },
             {"role": "user", "content": prompt},
         ],
         response_format={"type": "json_object"},

@@ -39,8 +39,10 @@ GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 
 try:
     from google import genai
+    from google.genai import types as genai_types
 except ImportError:
     genai = None
+    genai_types = None
 
 try:
     from openai import OpenAI
@@ -156,9 +158,23 @@ class GeminiClient:
         full_prompt = f"{system_prompt}\n\n{user_prompt}".strip()
 
         model_id = model or self.model
+
+        # Forzar JSON limpio (sin fences markdown) cuando el caller pide
+        # json_object: el SDK devuelve el JSON directo, sin wrappers de texto.
+        config = None
+        if (
+            response_format
+            and response_format.get("type") == "json_object"
+            and genai_types is not None
+        ):
+            config = genai_types.GenerateContentConfig(
+                response_mime_type="application/json"
+            )
+
         response = self._client.models.generate_content(
             model=model_id,
             contents=full_prompt,
+            config=config,
         )
         return _LLMResponse(_clean_json_text(response.text))
 
