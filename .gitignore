@@ -69,3 +69,6 @@ logs/
 
 # --- Gentle AI (artefacto local, no portable) ---
 .atl/
+
+# --- Guía de estudio personal (no versionar) ---
+guia-estudio.md
