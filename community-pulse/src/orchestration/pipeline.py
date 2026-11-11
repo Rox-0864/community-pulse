@@ -17,11 +17,15 @@ from src.decisions.engine import DecisionEngine
 class CommunityPulsePipeline:
     """Pipeline principal del sistema Community Pulse."""
 
-    def __init__(self, llm_client, oci_storage=None, historial=None):
+    def __init__(self, llm_client, oci_storage=None, historial=None, max_concurrency=3):
         self.llm = llm_client
         self.oci = oci_storage
         self.router = ContentRouter()
         self.decisions = DecisionEngine(llm_client, historial)
+        # Límite de análisis concurrentes: evita saturar la cuota del LLM
+        # (ej. free tier de Gemini = 15 req/min) al no disparar todo el lote
+        # en paralelo de golpe.
+        self.max_concurrency = max_concurrency
 
     async def process(self, input_data: dict) -> dict:
         """
@@ -41,12 +45,18 @@ class CommunityPulsePipeline:
             input_data.get("origen_comunidad", "discord"),
         )
 
-        # Paso 2: Analizar en paralelo
+        # Paso 2: Analizar con concurrencia LIMITADA.
         # full_analysis es SÍNCRONO → asyncio.to_thread para paralelismo real.
-        # (asyncio.gather directo fallaría: no acepta funciones síncronas)
-        analyses = await asyncio.gather(*[
-            asyncio.to_thread(full_analysis, msg, self.llm) for msg in messages
-        ])
+        # Un semáforo limita cuántos análisis corren a la vez para no saturar
+        # la cuota del LLM (free tier). (asyncio.gather directo fallaría:
+        # no acepta funciones síncronas).
+        sem = asyncio.Semaphore(self.max_concurrency)
+
+        async def _analizar(msg):
+            async with sem:
+                return await asyncio.to_thread(full_analysis, msg, self.llm)
+
+        analyses = await asyncio.gather(*[_analizar(msg) for msg in messages])
 
         # Paso 3: Decisiones
         batch_analysis = {
