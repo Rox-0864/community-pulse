@@ -1,0 +1,56 @@
+# ============================================
+# Community Pulse — .dockerignore
+# ============================================
+# Lo que NO entra en la imagen. Crítico: `.env`, `venv/` y cualquier
+# clave (pem/key) nunca deben terminar dentro de la imagen.
+
+# --- Secretos y configuración local ---
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+config_secrets*
+
+# --- Entorno virtual (gigante, se reinstala en la imagen) ---
+venv/
+env/
+.venv/
+
+# --- Git ---
+.git/
+.gitignore
+
+# --- Artefactos de Python ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# --- Tests (no corren en producción) ---
+tests/
+
+# --- Datos grandes / no versionados ---
+data/raw/
+data/real/
+data/processed/
+
+# --- Herramientas y docs locales ---
+notebooks/
+n8n/
+docs/
+scripts/
+guia-estudio.md
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

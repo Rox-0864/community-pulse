@@ -1,0 +1,52 @@
+# ============================================
+# Community Pulse — Orquestación local/VM
+# ============================================
+# Levanta dos servicios desde la misma imagen:
+#   - api:       REST (uvicorn) en el puerto 8000.
+#   - streamlit: dashboard en el puerto 8501.
+#
+# Requiere un archivo `.env` junto a este compose (copiá `.env.example`
+# y completá las claves). NUNCA se commitea ni se mete en la imagen.
+#
+# Uso:
+#   docker compose up -d --build
+#
+# Responsable: Backend Developer
+# ============================================
+
+services:
+  api:
+    build: .
+    image: community-pulse:latest
+    container_name: cp-api
+    command: uvicorn src.api.endpoints:app --host 0.0.0.0 --port 8000
+    environment:
+      - PYTHONPATH=/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  streamlit:
+    build: .
+    image: community-pulse:latest
+    container_name: cp-streamlit
+    command: >
+      streamlit run src/interface/app.py
+      --server.headless true
+      --server.address 0.0.0.0
+      --server.port 8501
+    environment:
+      - PYTHONPATH=/app
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    restart: unless-stopped
