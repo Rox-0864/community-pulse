@@ -28,8 +28,8 @@ def test_factory_con_solo_groq(monkeypatch):
     assert isinstance(client._fallback, RuleBasedClient)
 
 
-def test_factory_cadena_gemini_groq(monkeypatch):
-    """Con Gemini y Groq, la cadena es Gemini → Groq → rule_based."""
+def test_factory_cadena_groq_gemini(monkeypatch):
+    """Con Gemini y Groq, la cadena es Groq → Gemini → rule_based."""
     monkeypatch.delenv("COMMUNITYLAB_LLM_BACKEND", raising=False)
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     monkeypatch.setenv("GEMINI_API_KEY", "gem_test")
@@ -37,11 +37,11 @@ def test_factory_cadena_gemini_groq(monkeypatch):
 
     client = create_llm_client()
 
-    # Primario: Gemini. Su fallback: otra cadena Groq → rule_based.
+    # Primario: Groq. Su fallback: otra cadena Gemini → rule_based.
     assert isinstance(client, FallbackLLMClient)
-    assert isinstance(client._primary, GeminiClient)
+    assert isinstance(client._primary, GroqClient)
     assert isinstance(client._fallback, FallbackLLMClient)
-    assert isinstance(client._fallback._primary, GroqClient)
+    assert isinstance(client._fallback._primary, GeminiClient)
     assert isinstance(client._fallback._fallback, RuleBasedClient)
 
 
@@ -51,6 +51,69 @@ def test_groq_model_configurable_por_env(monkeypatch):
     monkeypatch.setenv("GROQ_MODEL", "openai/gpt-oss-20b")
     client = GroqClient()
     assert client.model == "openai/gpt-oss-20b"
+
+
+class _FakeOpenAIClient:
+    """SDK openai falso: captura los kwargs y devuelve una respuesta mínima."""
+
+    def __init__(self):
+        self.capturado = {}
+
+    @property
+    def chat(self):
+        return self
+
+    @property
+    def completions(self):
+        return self
+
+    def create(self, **kwargs):
+        self.capturado.update(kwargs)
+
+        class _Msg:
+            content = "{}"
+
+        class _Choice:
+            message = _Msg()
+
+        class _Resp:
+            choices = [_Choice()]
+
+        return _Resp()
+
+
+def test_groq_injecta_json_si_el_prompt_no_lo_tiene(monkeypatch):
+    """Groq exige 'json' en el prompt para json_object; se inyecta si falta."""
+    monkeypatch.setenv("GROQ_API_KEY", "gsk_test")
+
+    client = GroqClient()
+    fake = _FakeOpenAIClient()
+    monkeypatch.setattr(client, "_client", fake)
+
+    client._create(
+        messages=[{"role": "user", "content": "Escribí un post de LinkedIn"}],
+        response_format={"type": "json_object"},
+    )
+
+    mensajes = fake.capturado["messages"]
+    assert any("json" in (m["content"] or "").lower() for m in mensajes)
+    assert len(mensajes) == 2  # el mensaje original + el system inyectado
+
+
+def test_groq_no_injecta_json_si_ya_esta(monkeypatch):
+    """Si el prompt ya menciona 'json', no se agrega nada."""
+    monkeypatch.setenv("GROQ_API_KEY", "gsk_test")
+
+    client = GroqClient()
+    fake = _FakeOpenAIClient()
+    monkeypatch.setattr(client, "_client", fake)
+
+    client._create(
+        messages=[{"role": "user", "content": "responde en json"}],
+        response_format={"type": "json_object"},
+    )
+
+    assert len(fake.capturado["messages"]) == 1
 
 
 # ----------------------------------------------------------------------

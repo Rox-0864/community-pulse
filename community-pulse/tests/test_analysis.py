@@ -102,6 +102,24 @@ def test_score_relevance_fallback_a_score(fake_llm):
     assert result["score"] == 0.6
 
 
+def test_score_relevance_tolera_weighted_average_en_ingles(fake_llm):
+    """Groq devuelve 'weighted_average' (inglés); se lee igual que el español."""
+    llm = fake_llm({
+        "shareability": 0.92,
+        "weighted_average": 0.93,
+        "justification": "inspirador y relevante",
+    })
+    result = score_relevance(
+        "conseguí trabajo",
+        {"sentimiento": {"etiqueta": "muy_positivo"},
+         "categorias": ["contratacion_logro"]},
+        llm,
+    )
+
+    assert result["score"] == 0.93
+    assert result["razon"] == "inspirador y relevante"
+
+
 def test_score_relevance_default(fake_llm):
     llm = fake_llm({})
     result = score_relevance("texto", {}, llm)

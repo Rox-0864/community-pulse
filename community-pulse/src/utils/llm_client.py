@@ -9,7 +9,7 @@ Modos de ejecución:
 3. GROQ_API_KEY → GroqClient (API OpenAI-compatible, gratuito y rápido)
 4. OPENAI_API_KEY → OpenAI
 
-Los proveedores reales se encadenan en orden Gemini → Groq → OpenAI; si uno
+Los proveedores reales se encadenan en orden Groq → Gemini → OpenAI; si uno
 falla en runtime (sin internet, API caída, key inválida o cuota agotada), se
 delega en el siguiente y al final en RuleBasedClient (offline).
 
@@ -58,7 +58,7 @@ def create_llm_client():
     """
     Crea el cliente LLM según las variables de entorno.
 
-    Prioridad: rule_based (explícito) → Gemini → Groq → OpenAI → rule_based.
+    Prioridad: rule_based (explícito) → Groq → Gemini → OpenAI → rule_based.
 
     Los clientes reales se encadenan con FallbackLLMClient: si el primario
     falla en runtime (sin internet, API caída, key inválida, cuota agotada),
@@ -75,12 +75,12 @@ def create_llm_client():
 
     # 2. Proveedores reales disponibles, en orden de preferencia.
     providers = []
+    if os.getenv("GROQ_API_KEY"):
+        providers.append(GroqClient())
     if os.getenv("GEMINI_API_KEY"):
         if genai is None:
             raise ImportError("Instala google-genai: pip install google-genai")
         providers.append(GeminiClient())
-    if os.getenv("GROQ_API_KEY"):
-        providers.append(GroqClient())
 
     # 3. OpenAI como camino separado (solo si no hay Gemini ni Groq).
     if not providers and os.getenv("OPENAI_API_KEY"):
@@ -213,6 +213,20 @@ class GroqClient:
     def _create(self, model: str = None, messages: list = None, response_format: dict = None):
         messages = messages or []
         model_id = model or self.model
+
+        # Groq (igual que OpenAI) exige que algún mensaje contenga la palabra
+        # "json" para aceptar response_format=json_object; si ningún prompt la
+        # menciona, devuelve 400 y el pipeline caería al respaldo rule_based.
+        # Lo inyectamos aquí (una sola vez) en vez de depender de cada prompt.
+        if (
+            response_format
+            and response_format.get("type") == "json_object"
+            and not any("json" in (m.get("content", "") or "").lower() for m in messages)
+        ):
+            messages = list(messages) + [
+                {"role": "system", "content": "Responde en JSON."}
+            ]
+
         response = self._client.chat.completions.create(
             model=model_id,
             messages=messages,
